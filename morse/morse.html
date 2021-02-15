@@ -1,0 +1,65 @@
+<!-- Morse Code Tester for 0 to 9 -->
+<html>
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Libre+Franklin&display=swap" rel="stylesheet">
+
+<script>
+async function myFunction() {
+	let codestring = document.getElementById("code").value;
+	symbol_time = document.getElementById("symbol_time").value;
+
+  for (let i = 0; i < codestring.length; i++) {
+		let codeChar = codestring.charAt(i);
+  	code = Math.abs(Math.round(codeChar));
+  	await show_morse_digit(code);
+  }
+}
+async function show_morse_digit(digit) {
+  let durations = morse_numbers[digit];
+  for (let i = 0; i < durations.length; i++) {
+    let duration = durations.charAt(i);
+    if (duration == "l") {
+      document.body.style.backgroundColor = bright;
+      await sleep(symbol_time);
+    } else if (duration == "s") {
+      document.body.style.backgroundColor = bright;
+      await sleep(symbol_time / 2);
+      document.body.style.backgroundColor = dark;
+      await sleep(symbol_time / 2);
+    }
+    document.body.style.backgroundColor = dark;
+    await sleep(symbol_time);
+  }
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+var symbol_time = 1600;
+var bright = "white";
+var dark = "black";
+let morse_numbers = ["lllll", "sllll", "sslll", "sssll", "ssssl", "sssss", "lssss", "llsss", "lllss", "lllls"]
+</script>
+
+<style>
+    body {
+            background-color: black; 
+            color: gold;
+            font-family: 'Libre Franklin', sans-serif;
+            }
+    h {font-family: 'Anton', sans-serif;}
+</style>
+
+</head>
+
+<body>
+<h1>Morser</h1>
+Enter the numbers to send here <input id="code" type="number" min="0" max="9" step="1" value="0"/>
+Modify the timing here, in [ms] <input id="symbol_time" type="number" min="1000" max="2000" step="50" value="1600"/>
+<br/>
+ <button type="button" onclick="myFunction()">Start!</button> 
+
+</body>
+</html>
